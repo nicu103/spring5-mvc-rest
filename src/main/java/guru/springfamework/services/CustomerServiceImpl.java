@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    private  final CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
     public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
@@ -35,9 +35,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO getCustomerById(Long id) {
         return customerRepository
-                        .findById(id)
-                        .map(customerMapper::customerToCustomerDTO)
-                        .orElseThrow(RuntimeException::new);
+                .findById(id)
+                .map(customerMapper::customerToCustomerDTO)
+                .map(customerDTO -> {
+                    customerDTO.setCustomerUrl("/api/v1/customer/" + id);
+                    return customerDTO;
+                })
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
