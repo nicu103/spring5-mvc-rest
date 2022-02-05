@@ -1,7 +1,9 @@
 package guru.springfamework.controllers.v1;
 
 import guru.springfamework.api.v1.model.CustomerDTO;
+import guru.springfamework.controllers.RestResponseEntityExceptionHandler;
 import guru.springfamework.services.CustomerService;
+import guru.springfamework.services.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,8 +18,7 @@ import java.util.Arrays;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,7 +38,10 @@ public class CustomerControllerTest extends AbstractControllerTest{
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(customerController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                .build();
     }
 
     @Test
@@ -154,5 +158,14 @@ public class CustomerControllerTest extends AbstractControllerTest{
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(customerService).deleteCustomerById(anyLong());
+    }
+
+    @Test
+    public void testGetByNameNotFound() throws Exception {
+        when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(CategoryController.BASE_URL + "/222")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
