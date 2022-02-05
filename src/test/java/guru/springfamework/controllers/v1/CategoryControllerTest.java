@@ -60,7 +60,6 @@ public class CategoryControllerTest {
                 // then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.categories", hasSize(2)));
-
     }
 
     @Test
