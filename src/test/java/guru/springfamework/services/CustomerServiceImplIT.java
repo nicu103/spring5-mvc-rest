@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CustomerSErviceImplIT {
+public class CustomerServiceImplIT {
 
     @Autowired
     CustomerRepository customerRepository;
