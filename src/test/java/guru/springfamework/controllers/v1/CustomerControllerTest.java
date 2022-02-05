@@ -43,12 +43,10 @@ public class CustomerControllerTest {
 
         // given
         CustomerDTO customer1 = new CustomerDTO();
-        customer1.setId(1L);
         customer1.setFirstName("John");
         customer1.setLastName("Doe");
 
         CustomerDTO customer2 = new CustomerDTO();
-        customer2.setId(2L);
         customer2.setFirstName("Jenny");
         customer2.setLastName("Doe");
 
@@ -66,7 +64,6 @@ public class CustomerControllerTest {
     public void getCustomerById() throws Exception {
         // given
         CustomerDTO customer = new CustomerDTO();
-        customer.setId(1L);
         customer.setFirstName("Jenny");
         customer.setLastName("Doe");
 
@@ -78,7 +75,6 @@ public class CustomerControllerTest {
                 // then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Jenny")))
-                .andExpect(jsonPath("$.lastName", equalTo("Doe")))
-                .andExpect(jsonPath("$.id", equalTo(1)));
+                .andExpect(jsonPath("$.lastName", equalTo("Doe")));
     }
 }
