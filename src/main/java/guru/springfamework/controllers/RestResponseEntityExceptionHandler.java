@@ -1,6 +1,6 @@
 package guru.springfamework.controllers;
 
-import guru.springfamework.services.ResourceNotFoundException;
+import guru.springfamework.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
