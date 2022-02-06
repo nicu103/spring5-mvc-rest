@@ -3,11 +3,12 @@ package guru.springfamework.controllers.v1;
 import guru.springfamework.api.v1.model.CustomerDTO;
 import guru.springfamework.api.v1.model.CustomerListDTO;
 import guru.springfamework.services.CustomerService;
-import net.bytebuddy.implementation.bytecode.assign.primitive.VoidAwareAssigner;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "customer-controller", description = "The endpoints for the Customer resource")
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -20,36 +21,42 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @Operation(summary = "Lists all Customers", description = "This returns the list of Customers")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers() {
         return new CustomerListDTO(customerService.getAllCustomers());
     }
 
+    @Operation(summary = "Finds one Customer", description = "This returns one Customer by their ID")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO getCustomerById(@PathVariable("id") Long id) {
         return customerService.getCustomerById(id);
     }
 
+    @Operation(summary = "Creates one Customer", description = "This creates one Customer")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO createNewCustomer(@RequestBody CustomerDTO customerDTO) {
         return customerService.createNewCustomer(customerDTO);
     }
 
+    @Operation(summary = "Updates one Customer", description = "This updates one Customer by their ID")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO updateExistingCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
         return customerService.saveCustomerByDTO(id, customerDTO);
     }
 
+    @Operation(summary = "Patches one Customer", description = "This patches one Customer by their ID")
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDTO patchExistingCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
         return customerService.patchCustomer(id, customerDTO);
     }
 
+    @Operation(summary = "Deletes one Customer", description = "This deletes one Customer by their ID")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteExistingCustomer(@PathVariable Long id) {
