@@ -85,29 +85,29 @@ public class CustomerControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.lastName", equalTo("Doe")));
     }
 
-//    @Test
-//    public void createNewCustomer() throws Exception {
-//        // given
-//        CustomerDTO customer = new CustomerDTO();
-//        customer.setFirstName("Yuyu");
-//        customer.setLastName("Hakusho");
-//
-//        CustomerDTO returnDTO = new CustomerDTO();
-//        returnDTO.setFirstName(customer.getFirstName());
-//        returnDTO.setLastName(customer.getLastName());
-//        returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
-//
-//        when(customerService.createNewCustomer(customer)).thenReturn(returnDTO);
-//
-//        mockMvc.perform(post(CustomerController.BASE_URL)
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(asJsonString(customer)))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.firstName", equalTo("Yuyu")))
-//                .andExpect(jsonPath("$.lastName", equalTo("Hakusho")))
-//                .andExpect(jsonPath("$.customerUrl", equalTo("/api/v1/customers/1")));
-//    }
+    @Test
+    public void createNewCustomer() throws Exception {
+        // given
+        CustomerDTO customer = new CustomerDTO();
+        customer.setFirstName("Yuyu");
+        customer.setLastName("Hakusho");
+
+        CustomerDTO returnDTO = new CustomerDTO();
+        returnDTO.setFirstName(customer.getFirstName());
+        returnDTO.setLastName(customer.getLastName());
+        returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
+
+        when(customerService.createNewCustomer(any())).thenReturn(returnDTO);
+
+        mockMvc.perform(post(CustomerController.BASE_URL)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(customer)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName", equalTo("Yuyu")))
+                .andExpect(jsonPath("$.lastName", equalTo("Hakusho")))
+                .andExpect(jsonPath("$.customerUrl", equalTo("/api/v1/customers/1")));
+    }
 
     @Test
     public void testUpdateCustomer() throws Exception {
