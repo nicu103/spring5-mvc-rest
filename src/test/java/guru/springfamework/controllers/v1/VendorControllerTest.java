@@ -63,6 +63,7 @@ public class VendorControllerTest extends AbstractControllerTest {
 
         // when
         mockMvc.perform(get(VendorController.BASE_URL)
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 // then
                 .andExpect(status().isOk())
@@ -79,6 +80,7 @@ public class VendorControllerTest extends AbstractControllerTest {
 
         //when
         mockMvc.perform(get(VENDOR_URL_WITH_ID)
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 // then
                 .andExpect(status().isOk())
@@ -101,6 +103,7 @@ public class VendorControllerTest extends AbstractControllerTest {
 
         // when
         mockMvc.perform(post(VendorController.BASE_URL)
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(vendorDTO)))
                 //then
@@ -124,8 +127,9 @@ public class VendorControllerTest extends AbstractControllerTest {
 
         // when
         mockMvc.perform(put(VENDOR_URL_WITH_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(vendor)))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(vendor)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(FIRST_VENDOR_NAME)))
                 .andExpect(jsonPath("$.vendorUrl", equalTo(VENDOR_URL_WITH_ID)));
@@ -147,6 +151,7 @@ public class VendorControllerTest extends AbstractControllerTest {
 
         // when
         mockMvc.perform(patch(VENDOR_URL_WITH_ID)
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(vendor)))
                 .andExpect(status().isOk())
